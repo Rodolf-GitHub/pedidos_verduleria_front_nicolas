@@ -82,13 +82,13 @@ define(['./workbox-52f2a342'], (function (workbox) { 'use strict';
     "revision": "3ca0b8505b4bec776b69afdba2768812"
   }, {
     "url": "index.html",
-    "revision": "0.mmbe8qlsgig"
+    "revision": "0.t060rg4qc7"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html"), {
     allowlist: [/^\/$/]
   }));
-  workbox.registerRoute(/^http:\/\/localhost:8000\/.*/, new workbox.NetworkFirst({
+  workbox.registerRoute(/^https:\/\/verduleria\.api\.rodolfogroero\.com\/.*/, new workbox.NetworkFirst({
     "cacheName": "api-cache",
     plugins: [new workbox.ExpirationPlugin({
       maxEntries: 50,

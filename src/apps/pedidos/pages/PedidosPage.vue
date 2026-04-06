@@ -261,7 +261,7 @@ const getEstadoColor = (estado: string) => {
     pendiente: 'bg-yellow-100 text-yellow-800',
     confirmado: 'bg-blue-100 text-blue-800',
     en_preparacion: 'bg-purple-100 text-purple-800',
-    listo: 'bg-green-100 text-green-800',
+    listo: 'bg-indigo-100 text-indigo-800',
     cancelado: 'bg-red-100 text-red-800',
   }
   return colors[estado] || 'bg-gray-100 text-gray-800'
@@ -339,7 +339,7 @@ const obtenerColorFondo = (diaLabel: string): string => {
   if (diaLabel === 'Pedidos de hoy') {
     return 'bg-blue-50'
   } else if (diaLabel === 'Pedidos de ayer') {
-    return 'bg-green-50'
+    return 'bg-indigo-50'
   } else if (diaLabel === 'Pedidos de anteayer') {
     return 'bg-orange-50'
   } else {
@@ -482,7 +482,7 @@ loadNegocios()
               diaLabel === 'Pedidos de hoy'
                 ? 'border-l-blue-400'
                 : diaLabel === 'Pedidos de ayer'
-                  ? 'border-l-green-400'
+                  ? 'border-l-indigo-400'
                   : diaLabel === 'Pedidos de anteayer'
                     ? 'border-l-orange-400'
                     : 'border-l-gray-400',

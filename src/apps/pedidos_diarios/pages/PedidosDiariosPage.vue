@@ -117,7 +117,7 @@ const estadoBadgeClass = computed(() => {
   if (!pedidoDiario.value?.estado) return 'bg-gray-100 text-gray-700'
   return pedidoDiario.value.estado === 'en_proceso'
     ? 'bg-blue-100 text-blue-700'
-    : 'bg-green-100 text-green-700'
+    : 'bg-indigo-100 text-indigo-700'
 })
 
 const isPedidoCompletado = computed(() => pedidoDiario.value?.estado === 'completado')

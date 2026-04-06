@@ -226,7 +226,7 @@ const getEstadoColor = (estado: string) => {
     pendiente: 'bg-yellow-100 text-yellow-800',
     confirmado: 'bg-blue-100 text-blue-800',
     en_preparacion: 'bg-purple-100 text-purple-800',
-    completado: 'bg-green-100 text-green-800',
+    completado: 'bg-indigo-100 text-indigo-800',
     cancelado: 'bg-red-100 text-red-800',
   }
   return colors[estado] || 'bg-gray-100 text-gray-800'
@@ -288,7 +288,7 @@ const obtenerColorFondo = (diaLabel: string): string => {
   if (diaLabel === 'Compras de hoy') {
     return 'bg-blue-50'
   } else if (diaLabel === 'Compras de ayer') {
-    return 'bg-green-50'
+    return 'bg-indigo-50'
   } else if (diaLabel === 'Compras de anteayer') {
     return 'bg-orange-50'
   } else {
@@ -399,7 +399,7 @@ loadPedidos()
             </button>
             <button
               @click="crearCompraDesdeListaPedidos(pedido.id)"
-              class="rounded-lg bg-green-100 px-3 py-2 text-green-600 hover:bg-green-200 transition-colors text-sm font-medium flex items-center gap-2"
+              class="rounded-lg bg-indigo-100 px-3 py-2 text-indigo-600 hover:bg-indigo-200 transition-colors text-sm font-medium flex items-center gap-2"
             >
               <Plus :size="16" />
               Crear Compra
@@ -483,7 +483,7 @@ loadPedidos()
               diaLabel === 'Compras de hoy'
                 ? 'border-l-blue-400'
                 : diaLabel === 'Compras de ayer'
-                  ? 'border-l-green-400'
+                  ? 'border-l-indigo-400'
                   : diaLabel === 'Compras de anteayer'
                     ? 'border-l-orange-400'
                     : 'border-l-gray-400',
@@ -532,7 +532,7 @@ loadPedidos()
                 <button
                   v-if="compra.estado !== 'completado'"
                   @click="handleCambiarEstado(compra, 'completado')"
-                  class="rounded-lg bg-green-100 px-2 py-1 text-green-700 hover:bg-green-200 transition-colors text-xs font-medium"
+                  class="rounded-lg bg-indigo-100 px-2 py-1 text-indigo-700 hover:bg-indigo-200 transition-colors text-xs font-medium"
                 >
                   Completar
                 </button>

@@ -169,9 +169,9 @@ const getEstadoColor = (estado: string) => {
     pendiente: 'bg-yellow-100 text-yellow-800',
     confirmado: 'bg-blue-100 text-blue-800',
     en_preparacion: 'bg-purple-100 text-purple-800',
-    listo: 'bg-green-100 text-green-800',
+    listo: 'bg-indigo-100 text-indigo-800',
     cancelado: 'bg-red-100 text-red-800',
-    completado: 'bg-green-100 text-green-800',
+    completado: 'bg-indigo-100 text-indigo-800',
   }
   return colors[estado] || 'bg-gray-100 text-gray-800'
 }
@@ -732,7 +732,7 @@ onMounted(() => {
                   v-if="
                     compra?.productos?.some((p) => p.producto?.id === productoPedido.producto?.id)
                   "
-                  class="text-xs text-green-600 mt-0.5"
+                  class="text-xs text-indigo-600 mt-0.5"
                 >
                   ✓ Agregado
                 </p>
@@ -1002,11 +1002,11 @@ onMounted(() => {
           </p>
         </div>
 
-        <div class="rounded-md border border-green-200 bg-green-50 px-4 py-3">
-          <p class="text-sm font-medium text-green-700">Precio de Venta (lo que se debe vender)</p>
-          <p class="text-xl font-semibold text-green-800">
+        <div class="rounded-md border border-indigo-200 bg-indigo-50 px-4 py-3">
+          <p class="text-sm font-medium text-indigo-700">Precio de Venta (lo que se debe vender)</p>
+          <p class="text-xl font-semibold text-indigo-800">
             ${{ precioVentaCalculado.toFixed(2) }}
-            <span class="text-xs font-normal text-green-700">
+            <span class="text-xs font-normal text-indigo-700">
               /{{ productoSeleccionado?.se_vende_en_unidad_medida || 'unidades' }}
             </span>
           </p>
@@ -1113,11 +1113,11 @@ onMounted(() => {
         </div>
 
         <!-- Precio de Venta (calculado) -->
-        <div class="rounded-md border border-green-200 bg-green-50 px-4 py-3">
-          <p class="text-sm font-medium text-green-700">Precio de Venta (lo que se debe vender)</p>
-          <p class="text-xl font-semibold text-green-800">
+        <div class="rounded-md border border-indigo-200 bg-indigo-50 px-4 py-3">
+          <p class="text-sm font-medium text-indigo-700">Precio de Venta (lo que se debe vender)</p>
+          <p class="text-xl font-semibold text-indigo-800">
             ${{ precioVentaEditCalculado.toFixed(2) }}
-            <span class="text-xs font-normal text-green-700">
+            <span class="text-xs font-normal text-indigo-700">
               /{{ productoEditando?.producto?.se_vende_en_unidad_medida || 'unidades' }}
             </span>
           </p>

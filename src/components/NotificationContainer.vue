@@ -23,7 +23,7 @@ const getIcon = (type: string) => {
 const getColors = (type: string) => {
   switch (type) {
     case 'success':
-      return 'bg-green-50 border-green-200 text-green-800'
+      return 'bg-indigo-50 border-indigo-200 text-indigo-800'
     case 'error':
       return 'bg-red-50 border-red-200 text-red-800'
     case 'warning':

@@ -42,7 +42,7 @@ export default defineConfig(({ mode }) => {
           start_url: '/?source=pwa',
           scope: '/',
           display: 'standalone',
-          theme_color: '#059669',
+          theme_color: '#3949ab',
           background_color: '#0f172a',
           lang: 'es',
           screenshots: [
