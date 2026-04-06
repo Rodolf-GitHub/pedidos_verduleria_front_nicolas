@@ -1,0 +1,1060 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "API Pedidos",
+    "version": "1.0.0",
+    "description": ""
+  },
+  "paths": {
+    "/api/pedidos/listar": {
+      "get": {
+        "operationId": "pedido_api_listar_pedidos",
+        "summary": "Listar Pedidos",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "busqueda",
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Busqueda"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "default": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedPedidoSimpleSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Pedidos"],
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/pedidos/listar_pedidos_completados": {
+      "get": {
+        "operationId": "pedido_api_listar_pedidos_completados",
+        "summary": "Listar Pedidos",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "busqueda",
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Busqueda"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "default": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedPedidoSchema"
+                }
+              }
+            }
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Comprador o Admin",
+        "tags": ["Pedidos"],
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/pedidos/listar_pedidos_completados_sin_compra_asociada": {
+      "get": {
+        "operationId": "pedido_api_listar_pedidos_completados_sin_compra",
+        "summary": "Listar Pedidos Completados Sin Compra",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "busqueda",
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Busqueda"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "default": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedPedidoSchema"
+                }
+              }
+            }
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Comprador o Admin",
+        "tags": ["Pedidos"],
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/pedidos/obtener/{pedido_id}": {
+      "get": {
+        "operationId": "pedido_api_obtener_pedido",
+        "summary": "Obtener Pedido",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pedido_id",
+            "schema": {
+              "title": "Pedido Id",
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PedidoSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Pedidos"],
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/pedidos/mis_pedidos": {
+      "get": {
+        "operationId": "pedido_api_listar_mis_pedidos",
+        "summary": "Listar Mis Pedidos",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "busqueda",
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Busqueda"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "default": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedPedidoSchema"
+                }
+              }
+            }
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Verdulero, Comprador o Admin",
+        "tags": ["Pedidos"],
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/pedidos/crear": {
+      "post": {
+        "operationId": "pedido_api_crear_pedido",
+        "summary": "Crear Pedido",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PedidoSchema"
+                }
+              }
+            }
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Verdulero, Comprador o Admin",
+        "tags": ["Pedidos"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PedidoCreateSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/pedidos/agregar_producto/{pedido_id}": {
+      "post": {
+        "operationId": "pedido_api_agregar_producto_a_pedido",
+        "summary": "Agregar Producto A Pedido",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pedido_id",
+            "schema": {
+              "title": "Pedido Id",
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PedidoProductoSchema"
+                }
+              }
+            }
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Verdulero, Comprador o Admin",
+        "tags": ["Pedidos"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgregarProductoPedidoSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/pedidos/eliminar_producto/{pedido_id}": {
+      "delete": {
+        "operationId": "pedido_api_eliminar_producto_de_pedido",
+        "summary": "Eliminar Producto De Pedido",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pedido_id",
+            "schema": {
+              "title": "Pedido Id",
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Verdulero, Comprador o Admin",
+        "tags": ["Pedidos"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EliminarProductoPedidoSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/pedidos/actualizar_producto/{pedido_id}": {
+      "put": {
+        "operationId": "pedido_api_actualizar_producto_en_pedido",
+        "summary": "Actualizar Producto En Pedido",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pedido_id",
+            "schema": {
+              "title": "Pedido Id",
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PedidoProductoSchema"
+                }
+              }
+            }
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Verdulero, Comprador o Admin",
+        "tags": ["Pedidos"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarProductoPedidoSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/pedidos/cambiar_estado/{pedido_id}": {
+      "put": {
+        "operationId": "pedido_api_cambiar_estado_pedido",
+        "summary": "Cambiar Estado Pedido",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pedido_id",
+            "schema": {
+              "title": "Pedido Id",
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PedidoSchema"
+                }
+              }
+            }
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Verdulero, Comprador o Admin",
+        "tags": ["Pedidos"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PedidoUpdateSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/pedidos/eliminar/{pedido_id}": {
+      "delete": {
+        "operationId": "pedido_api_eliminar_pedido",
+        "summary": "Eliminar Pedido",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pedido_id",
+            "schema": {
+              "title": "Pedido Id",
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Verdulero, Comprador o Admin",
+        "tags": ["Pedidos"],
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/pedidos/cambiar_fecha/{pedido_id}": {
+      "put": {
+        "operationId": "pedido_api_cambiar_fecha_pedido",
+        "summary": "Cambiar Fecha Pedido",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pedido_id",
+            "schema": {
+              "title": "Pedido Id",
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PedidoSchema"
+                }
+              }
+            }
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Verdulero, Comprador o Admin",
+        "tags": ["Pedidos"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PedidoActualizarFechaSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Input": {
+        "properties": {
+          "limit": {
+            "default": 100,
+            "minimum": 1,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "offset": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Offset",
+            "type": "integer"
+          }
+        },
+        "title": "Input",
+        "type": "object"
+      },
+      "PagedPedidoSimpleSchema": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/PedidoSimpleSchema"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          }
+        },
+        "required": ["items", "count"],
+        "title": "PagedPedidoSimpleSchema",
+        "type": "object"
+      },
+      "PedidoSimpleSchema": {
+        "properties": {
+          "cantidad_productos": {
+            "default": 0,
+            "title": "Cantidad Productos",
+            "type": "integer"
+          },
+          "creado_por_nombre": {
+            "title": "Creado Por Nombre",
+            "type": "string"
+          },
+          "id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "ID"
+          },
+          "creado_por": {
+            "title": "Creado Por",
+            "type": "integer"
+          },
+          "negocio": {
+            "title": "Negocio",
+            "type": "integer"
+          },
+          "fecha_creacion": {
+            "format": "date-time",
+            "title": "Fecha Creacion",
+            "type": "string"
+          },
+          "estado": {
+            "maxLength": 50,
+            "title": "Estado",
+            "type": "string"
+          }
+        },
+        "required": ["creado_por_nombre", "creado_por", "negocio", "estado"],
+        "title": "PedidoSimpleSchema",
+        "type": "object"
+      },
+      "PagedPedidoSchema": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/PedidoSchema"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          }
+        },
+        "required": ["items", "count"],
+        "title": "PagedPedidoSchema",
+        "type": "object"
+      },
+      "PedidoProductoSchema": {
+        "properties": {
+          "producto": {
+            "$ref": "#/components/schemas/ProductoSchema"
+          },
+          "id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "ID"
+          },
+          "cantidad": {
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Cantidad",
+            "type": "string"
+          },
+          "unidad_medida": {
+            "default": "cajas",
+            "maxLength": 20,
+            "title": "Unidad Medida",
+            "type": "string"
+          }
+        },
+        "required": ["producto", "cantidad"],
+        "title": "PedidoProductoSchema",
+        "type": "object"
+      },
+      "PedidoSchema": {
+        "properties": {
+          "productos": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/PedidoProductoSchema"
+            },
+            "title": "Productos",
+            "type": "array"
+          },
+          "creado_por_nombre": {
+            "title": "Creado Por Nombre",
+            "type": "string"
+          },
+          "id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "ID"
+          },
+          "creado_por": {
+            "title": "Creado Por",
+            "type": "integer"
+          },
+          "negocio": {
+            "title": "Negocio",
+            "type": "integer"
+          },
+          "fecha_creacion": {
+            "format": "date-time",
+            "title": "Fecha Creacion",
+            "type": "string"
+          },
+          "estado": {
+            "maxLength": 50,
+            "title": "Estado",
+            "type": "string"
+          }
+        },
+        "required": ["creado_por_nombre", "creado_por", "negocio", "estado"],
+        "title": "PedidoSchema",
+        "type": "object"
+      },
+      "ProductoSchema": {
+        "properties": {
+          "precio_venta": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Precio Venta"
+          },
+          "actualizado_recientemente": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Actualizado Recientemente"
+          },
+          "precio_compra_unitario": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Precio Compra Unitario"
+          },
+          "id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "ID"
+          },
+          "nombre": {
+            "maxLength": 100,
+            "title": "Nombre",
+            "type": "string"
+          },
+          "se_vende_en_unidad_medida": {
+            "anyOf": [
+              {
+                "maxLength": 50,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "cajas",
+            "title": "Se Vende En Unidad Medida"
+          },
+          "se_pide_en_unidad_medida": {
+            "anyOf": [
+              {
+                "maxLength": 50,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "kg",
+            "title": "Se Pide En Unidad Medida"
+          },
+          "precio_compra": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": 100,
+            "title": "Precio Compra"
+          },
+          "factor_division": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": 1,
+            "title": "Factor Division"
+          },
+          "ganancia_porcentaje": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": 40,
+            "title": "Ganancia Porcentaje"
+          },
+          "imagen": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Imagen"
+          },
+          "ultima_actualizacion": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ultima Actualizacion"
+          }
+        },
+        "required": ["nombre"],
+        "title": "ProductoSchema",
+        "type": "object"
+      },
+      "PedidoCreateSchema": {
+        "properties": {
+          "negocio_id": {
+            "title": "Negocio Id",
+            "type": "integer"
+          }
+        },
+        "required": ["negocio_id"],
+        "title": "PedidoCreateSchema",
+        "type": "object"
+      },
+      "AgregarProductoPedidoSchema": {
+        "properties": {
+          "producto_id": {
+            "title": "Producto Id",
+            "type": "integer"
+          },
+          "cantidad": {
+            "title": "Cantidad",
+            "type": "number"
+          },
+          "unidad_medida": {
+            "anyOf": [
+              {
+                "enum": [
+                  "kg",
+                  "unidades",
+                  "litros",
+                  "otros",
+                  "atados",
+                  "cajas",
+                  "sacos",
+                  "bandejas",
+                  "planchas"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "cajas",
+            "title": "Unidad Medida"
+          }
+        },
+        "required": ["producto_id", "cantidad"],
+        "title": "AgregarProductoPedidoSchema",
+        "type": "object"
+      },
+      "EliminarProductoPedidoSchema": {
+        "properties": {
+          "producto_id": {
+            "title": "Producto Id",
+            "type": "integer"
+          }
+        },
+        "required": ["producto_id"],
+        "title": "EliminarProductoPedidoSchema",
+        "type": "object"
+      },
+      "ActualizarProductoPedidoSchema": {
+        "properties": {
+          "producto_id": {
+            "title": "Producto Id",
+            "type": "integer"
+          },
+          "cantidad": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cantidad"
+          },
+          "unidad_medida": {
+            "anyOf": [
+              {
+                "enum": [
+                  "kg",
+                  "unidades",
+                  "litros",
+                  "otros",
+                  "atados",
+                  "cajas",
+                  "sacos",
+                  "bandejas",
+                  "planchas"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unidad Medida"
+          }
+        },
+        "required": ["producto_id"],
+        "title": "ActualizarProductoPedidoSchema",
+        "type": "object"
+      },
+      "PedidoUpdateSchema": {
+        "properties": {
+          "estado": {
+            "anyOf": [
+              {
+                "enum": ["en_proceso", "completado"],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Estado"
+          }
+        },
+        "title": "PedidoUpdateSchema",
+        "type": "object"
+      },
+      "PedidoActualizarFechaSchema": {
+        "properties": {
+          "fecha_creacion": {
+            "format": "date-time",
+            "title": "Fecha Creacion",
+            "type": "string"
+          }
+        },
+        "required": ["fecha_creacion"],
+        "title": "PedidoActualizarFechaSchema",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "AuthBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "servers": []
+}

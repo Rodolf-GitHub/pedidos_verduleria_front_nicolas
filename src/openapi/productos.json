@@ -1,0 +1,584 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "API Productos",
+    "version": "1.0.0",
+    "description": ""
+  },
+  "paths": {
+    "/api/productos/listar": {
+      "get": {
+        "operationId": "producto_api_listar_productos",
+        "summary": "Listar Productos",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "busqueda",
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Busqueda"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "default": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedProductoSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Productos"],
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/productos/crear": {
+      "post": {
+        "operationId": "producto_api_crear_producto",
+        "summary": "Crear Producto",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductoSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Productos"],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "properties": {
+                  "imagen": {
+                    "format": "binary",
+                    "title": "Imagen",
+                    "type": "string"
+                  },
+                  "payload": {
+                    "$ref": "#/components/schemas/ProductoCreateSchema"
+                  }
+                },
+                "title": "MultiPartBodyParams",
+                "type": "object",
+                "required": ["payload"]
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/productos/actualizar/{producto_id}": {
+      "put": {
+        "operationId": "producto_api_actualizar_producto",
+        "summary": "Actualizar Producto",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "producto_id",
+            "schema": {
+              "title": "Producto Id",
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductoSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Productos"],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "properties": {
+                  "imagen": {
+                    "format": "binary",
+                    "title": "Imagen",
+                    "type": "string"
+                  },
+                  "payload": {
+                    "$ref": "#/components/schemas/ProductoUpdateSchema"
+                  }
+                },
+                "title": "MultiPartBodyParams",
+                "type": "object",
+                "required": ["payload"]
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/productos/eliminar/{producto_id}": {
+      "delete": {
+        "operationId": "producto_api_eliminar_producto",
+        "summary": "Eliminar Producto",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "producto_id",
+            "schema": {
+              "title": "Producto Id",
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": ["Productos"],
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Input": {
+        "properties": {
+          "limit": {
+            "default": 100,
+            "minimum": 1,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "offset": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Offset",
+            "type": "integer"
+          }
+        },
+        "title": "Input",
+        "type": "object"
+      },
+      "PagedProductoSchema": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ProductoSchema"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          }
+        },
+        "required": ["items", "count"],
+        "title": "PagedProductoSchema",
+        "type": "object"
+      },
+      "ProductoSchema": {
+        "properties": {
+          "precio_venta": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Precio Venta"
+          },
+          "actualizado_recientemente": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Actualizado Recientemente"
+          },
+          "precio_compra_unitario": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Precio Compra Unitario"
+          },
+          "id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "ID"
+          },
+          "nombre": {
+            "maxLength": 100,
+            "title": "Nombre",
+            "type": "string"
+          },
+          "se_vende_en_unidad_medida": {
+            "anyOf": [
+              {
+                "maxLength": 50,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "cajas",
+            "title": "Se Vende En Unidad Medida"
+          },
+          "se_pide_en_unidad_medida": {
+            "anyOf": [
+              {
+                "maxLength": 50,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "kg",
+            "title": "Se Pide En Unidad Medida"
+          },
+          "precio_compra": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": 100,
+            "title": "Precio Compra"
+          },
+          "factor_division": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": 1,
+            "title": "Factor Division"
+          },
+          "ganancia_porcentaje": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": 40,
+            "title": "Ganancia Porcentaje"
+          },
+          "imagen": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Imagen"
+          },
+          "ultima_actualizacion": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ultima Actualizacion"
+          }
+        },
+        "required": ["nombre"],
+        "title": "ProductoSchema",
+        "type": "object"
+      },
+      "ProductoCreateSchema": {
+        "properties": {
+          "nombre": {
+            "title": "Nombre",
+            "type": "string"
+          },
+          "se_vende_en_unidad_medida": {
+            "anyOf": [
+              {
+                "enum": [
+                  "kg",
+                  "unidades",
+                  "litros",
+                  "otros",
+                  "atados",
+                  "cajas",
+                  "sacos",
+                  "bandejas",
+                  "planchas"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "kg",
+            "title": "Se Vende En Unidad Medida"
+          },
+          "se_compra_en_unidad_medida": {
+            "anyOf": [
+              {
+                "enum": [
+                  "kg",
+                  "unidades",
+                  "litros",
+                  "otros",
+                  "atados",
+                  "cajas",
+                  "sacos",
+                  "bandejas",
+                  "planchas"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "kg",
+            "title": "Se Compra En Unidad Medida"
+          },
+          "factor_division": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": 1,
+            "title": "Factor Division"
+          },
+          "precio_compra": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": 100,
+            "title": "Precio Compra"
+          },
+          "ganancia_porcentaje": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": 40,
+            "title": "Ganancia Porcentaje"
+          }
+        },
+        "required": ["nombre"],
+        "title": "ProductoCreateSchema",
+        "type": "object"
+      },
+      "ProductoUpdateSchema": {
+        "properties": {
+          "nombre": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nombre"
+          },
+          "se_vende_en_unidad_medida": {
+            "anyOf": [
+              {
+                "enum": [
+                  "kg",
+                  "unidades",
+                  "litros",
+                  "otros",
+                  "atados",
+                  "cajas",
+                  "sacos",
+                  "bandejas",
+                  "planchas"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Se Vende En Unidad Medida"
+          },
+          "precio_compra": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Precio Compra"
+          },
+          "ganancia_porcentaje": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ganancia Porcentaje"
+          },
+          "factor_division": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Factor Division"
+          },
+          "se_compra_en_unidad_medida": {
+            "anyOf": [
+              {
+                "enum": [
+                  "kg",
+                  "unidades",
+                  "litros",
+                  "otros",
+                  "atados",
+                  "cajas",
+                  "sacos",
+                  "bandejas",
+                  "planchas"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Se Compra En Unidad Medida"
+          }
+        },
+        "title": "ProductoUpdateSchema",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "AuthBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "servers": []
+}

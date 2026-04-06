@@ -1,0 +1,317 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "API Negocios",
+    "version": "1.0.0",
+    "description": ""
+  },
+  "paths": {
+    "/api/negocios/listar": {
+      "get": {
+        "operationId": "negocio_api_listar_negocios",
+        "summary": "Listar Negocios",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "busqueda",
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Busqueda"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "default": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedNegocioSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Negocios"],
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/negocios/crear": {
+      "post": {
+        "operationId": "negocio_api_crear_negocio",
+        "summary": "Crear Negocio",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NegocioSchema"
+                }
+              }
+            }
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Admin",
+        "tags": ["Negocios"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NegocioCreateSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/negocios/actualizar/{negocio_id}": {
+      "put": {
+        "operationId": "negocio_api_actualizar_negocio",
+        "summary": "Actualizar Negocio",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "negocio_id",
+            "schema": {
+              "title": "Negocio Id",
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NegocioSchema"
+                }
+              }
+            }
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Admin",
+        "tags": ["Negocios"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NegocioUpdateSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/negocios/eliminar/{negocio_id}": {
+      "delete": {
+        "operationId": "negocio_api_eliminar_negocio",
+        "summary": "Eliminar Negocio",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "negocio_id",
+            "schema": {
+              "title": "Negocio Id",
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Admin",
+        "tags": ["Negocios"],
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Input": {
+        "properties": {
+          "limit": {
+            "default": 100,
+            "minimum": 1,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "offset": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Offset",
+            "type": "integer"
+          }
+        },
+        "title": "Input",
+        "type": "object"
+      },
+      "NegocioSchema": {
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "ID"
+          },
+          "nombre": {
+            "maxLength": 100,
+            "title": "Nombre",
+            "type": "string"
+          },
+          "direccion": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Direccion"
+          }
+        },
+        "required": ["nombre"],
+        "title": "NegocioSchema",
+        "type": "object"
+      },
+      "PagedNegocioSchema": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/NegocioSchema"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          }
+        },
+        "required": ["items", "count"],
+        "title": "PagedNegocioSchema",
+        "type": "object"
+      },
+      "NegocioCreateSchema": {
+        "properties": {
+          "nombre": {
+            "title": "Nombre",
+            "type": "string"
+          },
+          "direccion": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Direccion"
+          }
+        },
+        "required": ["nombre"],
+        "title": "NegocioCreateSchema",
+        "type": "object"
+      },
+      "NegocioUpdateSchema": {
+        "properties": {
+          "nombre": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nombre"
+          },
+          "direccion": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Direccion"
+          }
+        },
+        "title": "NegocioUpdateSchema",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "AuthBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "servers": []
+}

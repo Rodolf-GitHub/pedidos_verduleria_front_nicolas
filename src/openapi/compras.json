@@ -1,0 +1,954 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "API Compras",
+    "version": "1.0.0",
+    "description": ""
+  },
+  "paths": {
+    "/api/compras/listar_compras": {
+      "get": {
+        "operationId": "compra_api_listar_compras",
+        "summary": "Listar Compras",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "busqueda",
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Busqueda"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "default": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedCompraSchema"
+                }
+              }
+            }
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Comprador o Admin",
+        "tags": ["Compras"],
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/compras/obtener/{compra_id}": {
+      "get": {
+        "operationId": "compra_api_obtener_compra",
+        "summary": "Obtener Compra",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "compra_id",
+            "schema": {
+              "title": "Compra Id",
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompraSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Compras"],
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/compras/obtener_pedido_asociado/{pedido_id}": {
+      "get": {
+        "operationId": "compra_api_obtener_compra_asociada",
+        "summary": "Obtener Compra Asociada",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pedido_id",
+            "schema": {
+              "title": "Pedido Id",
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompraSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Compras"],
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/compras/crear": {
+      "post": {
+        "operationId": "compra_api_crear_compra",
+        "summary": "Crear Compra",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompraSchema"
+                }
+              }
+            }
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Comprador o Admin",
+        "tags": ["Compras"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompraCreateSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/compras/agregar_producto/{compra_id}": {
+      "post": {
+        "operationId": "compra_api_agregar_producto_a_compra",
+        "summary": "Agregar Producto A Compra",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "compra_id",
+            "schema": {
+              "title": "Compra Id",
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompraProductoSchema"
+                }
+              }
+            }
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Comprador o Admin",
+        "tags": ["Compras"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgregarProductoCompraSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/compras/actualizar_producto/{compra_id}": {
+      "put": {
+        "operationId": "compra_api_actualizar_producto_de_compra",
+        "summary": "Actualizar Producto De Compra",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "compra_id",
+            "schema": {
+              "title": "Compra Id",
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompraProductoSchema"
+                }
+              }
+            }
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Comprador o Admin",
+        "tags": ["Compras"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarProductoCompraSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/compras/cambiar_estado/{compra_id}": {
+      "put": {
+        "operationId": "compra_api_cambiar_estado_compra",
+        "summary": "Cambiar Estado Compra",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "compra_id",
+            "schema": {
+              "title": "Compra Id",
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompraSchema"
+                }
+              }
+            }
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Comprador o Admin",
+        "tags": ["Compras"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompraUpdateSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/compras/eliminar_producto/{compra_id}": {
+      "delete": {
+        "operationId": "compra_api_eliminar_producto_de_compra",
+        "summary": "Eliminar Producto De Compra",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "compra_id",
+            "schema": {
+              "title": "Compra Id",
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Comprador o Admin",
+        "tags": ["Compras"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EliminarProductoCompraSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/compras/eliminar/{compra_id}": {
+      "delete": {
+        "operationId": "compra_api_eliminar_compra",
+        "summary": "Eliminar Compra",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "compra_id",
+            "schema": {
+              "title": "Compra Id",
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Comprador o Admin",
+        "tags": ["Compras"],
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Input": {
+        "properties": {
+          "limit": {
+            "default": 100,
+            "minimum": 1,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "offset": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Offset",
+            "type": "integer"
+          }
+        },
+        "title": "Input",
+        "type": "object"
+      },
+      "CompraProductoSchema": {
+        "properties": {
+          "producto": {
+            "$ref": "#/components/schemas/ProductoSchema"
+          },
+          "producto_nombre": {
+            "title": "Producto Nombre",
+            "type": "string"
+          },
+          "producto_imagen": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Producto Imagen"
+          },
+          "precio_venta": {
+            "title": "Precio Venta",
+            "type": "number"
+          },
+          "unidad_medida": {
+            "anyOf": [
+              {
+                "maxLength": 50,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "kg",
+            "title": "Unidad Medida"
+          },
+          "cantidad": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": 1,
+            "title": "Cantidad"
+          },
+          "estado_compra": {
+            "default": "comprado",
+            "maxLength": 50,
+            "title": "Estado Compra",
+            "type": "string"
+          },
+          "motivo_no_compra": {
+            "anyOf": [
+              {
+                "maxLength": 255,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Motivo No Compra"
+          },
+          "precio_de_compra": {
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Precio De Compra",
+            "type": "string"
+          },
+          "ganancia_deseada": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": 40,
+            "title": "Ganancia Deseada"
+          }
+        },
+        "required": ["producto", "producto_nombre", "precio_venta", "precio_de_compra"],
+        "title": "CompraProductoSchema",
+        "type": "object"
+      },
+      "CompraSchema": {
+        "properties": {
+          "productos": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/CompraProductoSchema"
+            },
+            "title": "Productos",
+            "type": "array"
+          },
+          "pedido": {
+            "$ref": "#/components/schemas/PedidoSchema"
+          },
+          "pedido_productos": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/PedidoProductoCompraSchema"
+            },
+            "title": "Pedido Productos",
+            "type": "array"
+          },
+          "id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "ID"
+          },
+          "creado_por": {
+            "title": "Creado Por",
+            "type": "integer"
+          },
+          "negocio": {
+            "title": "Negocio",
+            "type": "integer"
+          },
+          "fecha_creacion": {
+            "format": "date-time",
+            "title": "Fecha Creacion",
+            "type": "string"
+          },
+          "en_respuesta_a_pedido": {
+            "title": "En Respuesta A Pedido",
+            "type": "integer"
+          },
+          "estado": {
+            "maxLength": 50,
+            "title": "Estado",
+            "type": "string"
+          }
+        },
+        "required": [
+          "pedido",
+          "creado_por",
+          "negocio",
+          "fecha_creacion",
+          "en_respuesta_a_pedido",
+          "estado"
+        ],
+        "title": "CompraSchema",
+        "type": "object"
+      },
+      "PagedCompraSchema": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/CompraSchema"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          }
+        },
+        "required": ["items", "count"],
+        "title": "PagedCompraSchema",
+        "type": "object"
+      },
+      "PedidoProductoCompraSchema": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "producto": {
+            "$ref": "#/components/schemas/ProductoSchema"
+          },
+          "cantidad_solicitada": {
+            "title": "Cantidad Solicitada",
+            "type": "number"
+          },
+          "unidad_medida": {
+            "title": "Unidad Medida",
+            "type": "string"
+          },
+          "estado_compra": {
+            "anyOf": [
+              {
+                "enum": ["comprado", "no_comprado"],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Estado Compra"
+          },
+          "motivo_no_compra": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Motivo No Compra"
+          }
+        },
+        "required": ["id", "producto", "cantidad_solicitada", "unidad_medida"],
+        "title": "PedidoProductoCompraSchema",
+        "type": "object"
+      },
+      "PedidoProductoSchema": {
+        "properties": {
+          "producto": {
+            "$ref": "#/components/schemas/ProductoSchema"
+          },
+          "id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "ID"
+          },
+          "cantidad": {
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Cantidad",
+            "type": "string"
+          },
+          "unidad_medida": {
+            "maxLength": 50,
+            "title": "Unidad Medida",
+            "type": "string"
+          }
+        },
+        "required": ["producto", "cantidad", "unidad_medida"],
+        "title": "PedidoProductoSchema",
+        "type": "object"
+      },
+      "PedidoSchema": {
+        "properties": {
+          "productos": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/PedidoProductoSchema"
+            },
+            "title": "Productos",
+            "type": "array"
+          },
+          "id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "ID"
+          },
+          "creado_por": {
+            "title": "Creado Por",
+            "type": "integer"
+          },
+          "negocio": {
+            "title": "Negocio",
+            "type": "integer"
+          },
+          "fecha_creacion": {
+            "format": "date-time",
+            "title": "Fecha Creacion",
+            "type": "string"
+          },
+          "estado": {
+            "maxLength": 50,
+            "title": "Estado",
+            "type": "string"
+          }
+        },
+        "required": ["creado_por", "negocio", "fecha_creacion", "estado"],
+        "title": "PedidoSchema",
+        "type": "object"
+      },
+      "ProductoSchema": {
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "ID"
+          },
+          "nombre": {
+            "maxLength": 100,
+            "title": "Nombre",
+            "type": "string"
+          },
+          "se_vende_en_unidad_medida": {
+            "anyOf": [
+              {
+                "maxLength": 50,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "kg",
+            "title": "Se Vende En Unidad Medida"
+          },
+          "imagen": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Imagen"
+          }
+        },
+        "required": ["nombre"],
+        "title": "ProductoSchema",
+        "type": "object"
+      },
+      "CompraCreateSchema": {
+        "properties": {
+          "en_respuesta_a_pedido_id": {
+            "title": "En Respuesta A Pedido Id",
+            "type": "integer"
+          }
+        },
+        "required": ["en_respuesta_a_pedido_id"],
+        "title": "CompraCreateSchema",
+        "type": "object"
+      },
+      "AgregarProductoCompraSchema": {
+        "properties": {
+          "producto_id": {
+            "title": "Producto Id",
+            "type": "integer"
+          },
+          "pedido_producto_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pedido Producto Id"
+          },
+          "cantidad": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cantidad"
+          },
+          "unidad_medida": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unidad Medida"
+          },
+          "precio_de_compra": {
+            "title": "Precio De Compra",
+            "type": "number"
+          },
+          "ganancia_deseada": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ganancia Deseada"
+          },
+          "estado_compra": {
+            "anyOf": [
+              {
+                "enum": ["comprado", "no_comprado"],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "comprado",
+            "title": "Estado Compra"
+          },
+          "motivo_no_compra": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Motivo No Compra"
+          }
+        },
+        "required": ["producto_id", "precio_de_compra"],
+        "title": "AgregarProductoCompraSchema",
+        "type": "object"
+      },
+      "ActualizarProductoCompraSchema": {
+        "properties": {
+          "cantidad": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cantidad"
+          },
+          "unidad_medida": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unidad Medida"
+          },
+          "precio_de_compra": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Precio De Compra"
+          },
+          "ganancia_deseada": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ganancia Deseada"
+          },
+          "estado_compra": {
+            "anyOf": [
+              {
+                "enum": ["comprado", "no_comprado"],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Estado Compra"
+          },
+          "motivo_no_compra": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Motivo No Compra"
+          }
+        },
+        "title": "ActualizarProductoCompraSchema",
+        "type": "object"
+      },
+      "CompraUpdateSchema": {
+        "properties": {
+          "estado": {
+            "anyOf": [
+              {
+                "enum": ["en_proceso", "completado"],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Estado"
+          }
+        },
+        "title": "CompraUpdateSchema",
+        "type": "object"
+      },
+      "EliminarProductoCompraSchema": {
+        "properties": {
+          "producto_id": {
+            "title": "Producto Id",
+            "type": "integer"
+          }
+        },
+        "required": ["producto_id"],
+        "title": "EliminarProductoCompraSchema",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "AuthBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "servers": []
+}

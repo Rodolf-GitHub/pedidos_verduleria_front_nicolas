@@ -1,0 +1,657 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "API Pedido Diario",
+    "version": "1.0.0",
+    "description": ""
+  },
+  "paths": {
+    "/api/pedidos_diarios/por_fecha": {
+      "get": {
+        "operationId": "pedido_diario_api_obtener_pedido_diario_por_fecha",
+        "summary": "Obtener Pedido Diario Por Fecha",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "fecha",
+            "schema": {
+              "title": "Fecha",
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PedidoDiarioSchema"
+                }
+              }
+            }
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Comprador o Admin",
+        "tags": ["Pedidos diarios"],
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/pedidos_diarios/marcar": {
+      "put": {
+        "operationId": "pedido_diario_api_marcar_pedido_diario",
+        "summary": "Marcar Pedido Diario",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "fecha",
+            "schema": {
+              "title": "Fecha",
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Comprador o Admin",
+        "tags": ["Pedidos diarios"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PedidoDiarioEstadoUpdateSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/pedidos_diarios/desmarcar": {
+      "delete": {
+        "operationId": "pedido_diario_api_desmarcar_pedido_diario",
+        "summary": "Desmarcar Pedido Diario",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "fecha",
+            "schema": {
+              "title": "Fecha",
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Comprador o Admin",
+        "tags": ["Pedidos diarios"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PedidoDiarioEstadoUpdateSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/pedidos_diarios/cambiar_estado": {
+      "put": {
+        "operationId": "pedido_diario_api_cambiar_estado_pedido_diario",
+        "summary": "Cambiar Estado Pedido Diario",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "fecha",
+            "schema": {
+              "title": "Fecha",
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Comprador o Admin",
+        "tags": ["Pedidos diarios"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PedidoDiarioUpdateSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/pedidos_diarios/por_pedido/{pedido_id}": {
+      "get": {
+        "operationId": "pedido_diario_api_obtener_pedido_diario_por_pedido",
+        "summary": "Obtener Pedido Diario Por Pedido",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pedido_id",
+            "schema": {
+              "title": "Pedido Id",
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PedidoDiarioSchema"
+                }
+              }
+            }
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Verdulero, Comprador o Admin",
+        "tags": ["Pedidos diarios"],
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/pedidos_diarios/sin_completar": {
+      "get": {
+        "operationId": "pedido_diario_api_obtener_pedidos_diarios_sin_completar",
+        "summary": "Obtener Pedidos Diarios Sin Completar",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/PedidosSinCompletarSchema"
+                  },
+                  "title": "Response",
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "description": "Devuelve la lista de fechas que tienen pedidos (compras) y cuyo pedido diario\n    no existe o no está marcado como 'completado'.\n\n🔒 **Permisos requeridos:** Comprador o Admin",
+        "tags": ["Pedidos diarios"],
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PedidoDiarioCantidadNegocioSchema": {
+        "properties": {
+          "negocio_id": {
+            "title": "Negocio Id",
+            "type": "integer"
+          },
+          "negocio_nombre": {
+            "title": "Negocio Nombre",
+            "type": "string"
+          },
+          "cantidad": {
+            "title": "Cantidad",
+            "type": "number"
+          },
+          "unidad_medida": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unidad Medida"
+          }
+        },
+        "required": ["negocio_id", "negocio_nombre", "cantidad"],
+        "title": "PedidoDiarioCantidadNegocioSchema",
+        "type": "object"
+      },
+      "PedidoDiarioProductoSchema": {
+        "properties": {
+          "producto": {
+            "$ref": "#/components/schemas/ProductoSchema"
+          },
+          "cantidades_por_negocio": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/PedidoDiarioCantidadNegocioSchema"
+            },
+            "title": "Cantidades Por Negocio",
+            "type": "array"
+          },
+          "total": {
+            "$ref": "#/components/schemas/PedidoDiarioUnidadSchema"
+          }
+        },
+        "required": ["producto", "total"],
+        "title": "PedidoDiarioProductoSchema",
+        "type": "object"
+      },
+      "PedidoDiarioSchema": {
+        "properties": {
+          "fecha": {
+            "title": "Fecha",
+            "type": "string"
+          },
+          "estado": {
+            "anyOf": [
+              {
+                "enum": ["en_proceso", "completado"],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Estado"
+          },
+          "items": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/PedidoDiarioProductoSchema"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": ["fecha"],
+        "title": "PedidoDiarioSchema",
+        "type": "object"
+      },
+      "PedidoDiarioTotalPorUnidadSchema": {
+        "properties": {
+          "unidad_medida": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unidad Medida"
+          },
+          "cantidad_total": {
+            "title": "Cantidad Total",
+            "type": "number"
+          }
+        },
+        "required": ["cantidad_total"],
+        "title": "PedidoDiarioTotalPorUnidadSchema",
+        "type": "object"
+      },
+      "PedidoDiarioUnidadSchema": {
+        "properties": {
+          "unidad_pedido": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unidad Pedido"
+          },
+          "totales_por_unidad": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/PedidoDiarioTotalPorUnidadSchema"
+            },
+            "title": "Totales Por Unidad",
+            "type": "array"
+          },
+          "estado_compra": {
+            "anyOf": [
+              {
+                "enum": ["comprado", "no_comprado"],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Estado Compra"
+          },
+          "precio_compra": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Precio Compra"
+          },
+          "factor_division": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Factor Division"
+          },
+          "ganancia_aplicada": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ganancia Aplicada"
+          },
+          "motivo_no_compra": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Motivo No Compra"
+          }
+        },
+        "title": "PedidoDiarioUnidadSchema",
+        "type": "object"
+      },
+      "ProductoSchema": {
+        "properties": {
+          "precio_venta": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Precio Venta"
+          },
+          "actualizado_recientemente": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Actualizado Recientemente"
+          },
+          "precio_compra_unitario": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Precio Compra Unitario"
+          },
+          "id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "ID"
+          },
+          "nombre": {
+            "maxLength": 100,
+            "title": "Nombre",
+            "type": "string"
+          },
+          "se_vende_en_unidad_medida": {
+            "anyOf": [
+              {
+                "maxLength": 50,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "cajas",
+            "title": "Se Vende En Unidad Medida"
+          },
+          "se_pide_en_unidad_medida": {
+            "anyOf": [
+              {
+                "maxLength": 50,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "kg",
+            "title": "Se Pide En Unidad Medida"
+          },
+          "precio_compra": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": 100,
+            "title": "Precio Compra"
+          },
+          "factor_division": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": 1,
+            "title": "Factor Division"
+          },
+          "ganancia_porcentaje": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": 40,
+            "title": "Ganancia Porcentaje"
+          },
+          "imagen": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Imagen"
+          },
+          "ultima_actualizacion": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ultima Actualizacion"
+          }
+        },
+        "required": ["nombre"],
+        "title": "ProductoSchema",
+        "type": "object"
+      },
+      "PedidoDiarioEstadoUpdateSchema": {
+        "properties": {
+          "producto_id": {
+            "title": "Producto Id",
+            "type": "integer"
+          },
+          "estado_compra": {
+            "enum": ["comprado", "no_comprado"],
+            "title": "Estado Compra",
+            "type": "string"
+          },
+          "motivo_no_compra": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Motivo No Compra"
+          },
+          "precio_compra": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Precio Compra"
+          },
+          "factor_division": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Factor Division"
+          },
+          "ganancia_aplicada": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ganancia Aplicada"
+          }
+        },
+        "required": ["producto_id", "estado_compra"],
+        "title": "PedidoDiarioEstadoUpdateSchema",
+        "type": "object"
+      },
+      "PedidoDiarioUpdateSchema": {
+        "properties": {
+          "estado": {
+            "enum": ["en_proceso", "completado"],
+            "title": "Estado",
+            "type": "string"
+          }
+        },
+        "required": ["estado"],
+        "title": "PedidoDiarioUpdateSchema",
+        "type": "object"
+      },
+      "PedidosSinCompletarSchema": {
+        "properties": {
+          "fecha": {
+            "title": "Fecha",
+            "type": "string"
+          },
+          "urgencia": {
+            "enum": ["sin_urgencia", "a_tiempo", "pendiente", "critico"],
+            "title": "Urgencia",
+            "type": "string"
+          }
+        },
+        "required": ["fecha", "urgencia"],
+        "title": "PedidosSinCompletarSchema",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "AuthBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "servers": []
+}

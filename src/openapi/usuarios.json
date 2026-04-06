@@ -1,0 +1,604 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "API Usuarios",
+    "version": "1.0.0",
+    "description": ""
+  },
+  "paths": {
+    "/api/usuarios/listar": {
+      "get": {
+        "operationId": "usuarios_api_listar_usuarios",
+        "summary": "Listar Usuarios",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "busqueda",
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Busqueda"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "default": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedUsuarioSchema"
+                }
+              }
+            }
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Admin",
+        "tags": ["Usuarios"],
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/usuarios/obtener/{usuario_id}": {
+      "get": {
+        "operationId": "usuarios_api_obtener_usuario",
+        "summary": "Obtener Usuario",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "usuario_id",
+            "schema": {
+              "title": "Usuario Id",
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioSchema"
+                }
+              }
+            }
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Admin",
+        "tags": ["Usuarios"],
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/usuarios/me": {
+      "get": {
+        "operationId": "usuarios_api_obtener_usuario_actual",
+        "summary": "Obtener Usuario Actual",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Usuarios"],
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/usuarios/register": {
+      "post": {
+        "operationId": "usuarios_api_register_usuario",
+        "summary": "Register Usuario",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioSchema"
+                }
+              }
+            }
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Admin",
+        "tags": ["Usuarios"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioCreateSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/usuarios/login": {
+      "post": {
+        "operationId": "usuarios_api_login_usuario",
+        "summary": "Login Usuario",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Usuarios"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioLoginSchema"
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/api/usuarios/asignar_negocio/{usuario_id}": {
+      "post": {
+        "operationId": "usuarios_api_asignar_negocio_a_usuario",
+        "summary": "Asignar Negocio A Usuario",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "usuario_id",
+            "schema": {
+              "title": "Usuario Id",
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioSchema"
+                }
+              }
+            }
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Admin",
+        "tags": ["Usuarios"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioAsignarNegocioSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/usuarios/quitar_negocio/{usuario_id}": {
+      "post": {
+        "operationId": "usuarios_api_quitar_negocio_de_usuario",
+        "summary": "Quitar Negocio De Usuario",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "usuario_id",
+            "schema": {
+              "title": "Usuario Id",
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioSchema"
+                }
+              }
+            }
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Admin",
+        "tags": ["Usuarios"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioQuitarNegocioSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/usuarios/actualizar/{usuario_id}": {
+      "put": {
+        "operationId": "usuarios_api_actualizar_usuario",
+        "summary": "Actualizar Usuario",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "usuario_id",
+            "schema": {
+              "title": "Usuario Id",
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioSchema"
+                }
+              }
+            }
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Admin",
+        "tags": ["Usuarios"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioUpdateSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    },
+    "/api/usuarios/eliminar/{usuario_id}": {
+      "delete": {
+        "operationId": "usuarios_api_eliminar_usuario",
+        "summary": "Eliminar Usuario",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "usuario_id",
+            "schema": {
+              "title": "Usuario Id",
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "🔒 **Permisos requeridos:** Admin",
+        "tags": ["Usuarios"],
+        "security": [
+          {
+            "AuthBearer": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Input": {
+        "properties": {
+          "limit": {
+            "default": 100,
+            "minimum": 1,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "offset": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Offset",
+            "type": "integer"
+          }
+        },
+        "title": "Input",
+        "type": "object"
+      },
+      "NegocioSchema": {
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "ID"
+          },
+          "nombre": {
+            "maxLength": 100,
+            "title": "Nombre",
+            "type": "string"
+          },
+          "direccion": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Direccion"
+          }
+        },
+        "required": ["nombre"],
+        "title": "NegocioSchema",
+        "type": "object"
+      },
+      "PagedUsuarioSchema": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/UsuarioSchema"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          }
+        },
+        "required": ["items", "count"],
+        "title": "PagedUsuarioSchema",
+        "type": "object"
+      },
+      "UsuarioSchema": {
+        "properties": {
+          "negocios": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/NegocioSchema"
+            },
+            "title": "Negocios",
+            "type": "array"
+          },
+          "id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "ID"
+          },
+          "nombre": {
+            "maxLength": 100,
+            "title": "Nombre",
+            "type": "string"
+          },
+          "rol": {
+            "maxLength": 50,
+            "title": "Rol",
+            "type": "string"
+          }
+        },
+        "required": ["nombre", "rol"],
+        "title": "UsuarioSchema",
+        "type": "object"
+      },
+      "UsuarioCreateSchema": {
+        "properties": {
+          "nombre": {
+            "title": "Nombre",
+            "type": "string"
+          },
+          "contraseña": {
+            "title": "Contraseña",
+            "type": "string"
+          },
+          "rol": {
+            "enum": ["admin", "verdulero", "comprador"],
+            "title": "Rol",
+            "type": "string"
+          }
+        },
+        "required": ["nombre", "contraseña", "rol"],
+        "title": "UsuarioCreateSchema",
+        "type": "object"
+      },
+      "UsuarioUpdateSchema": {
+        "properties": {
+          "nombre": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nombre"
+          },
+          "contraseña": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contraseña"
+          },
+          "rol": {
+            "anyOf": [
+              {
+                "enum": ["admin", "verdulero", "comprador"],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rol"
+          }
+        },
+        "title": "UsuarioUpdateSchema",
+        "type": "object"
+      },
+      "TokenSchema": {
+        "properties": {
+          "nombre": {
+            "title": "Nombre",
+            "type": "string"
+          },
+          "rol": {
+            "enum": ["admin", "verdulero", "comprador"],
+            "title": "Rol",
+            "type": "string"
+          },
+          "token": {
+            "title": "Token",
+            "type": "string"
+          }
+        },
+        "required": ["nombre", "rol", "token"],
+        "title": "TokenSchema",
+        "type": "object"
+      },
+      "UsuarioLoginSchema": {
+        "properties": {
+          "nombre": {
+            "title": "Nombre",
+            "type": "string"
+          },
+          "contraseña": {
+            "title": "Contraseña",
+            "type": "string"
+          }
+        },
+        "required": ["nombre", "contraseña"],
+        "title": "UsuarioLoginSchema",
+        "type": "object"
+      },
+      "UsuarioAsignarNegocioSchema": {
+        "properties": {
+          "negocio_id": {
+            "title": "Negocio Id",
+            "type": "integer"
+          }
+        },
+        "required": ["negocio_id"],
+        "title": "UsuarioAsignarNegocioSchema",
+        "type": "object"
+      },
+      "UsuarioQuitarNegocioSchema": {
+        "properties": {
+          "negocio_id": {
+            "title": "Negocio Id",
+            "type": "integer"
+          }
+        },
+        "required": ["negocio_id"],
+        "title": "UsuarioQuitarNegocioSchema",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "AuthBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "servers": []
+}
